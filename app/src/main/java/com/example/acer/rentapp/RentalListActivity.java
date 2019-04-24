@@ -2,14 +2,12 @@ package com.example.acer.rentapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageButton;
 
-public class HomeActivity extends AppCompatActivity {
-
+public class RentalListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_rental_list);
     }
 }

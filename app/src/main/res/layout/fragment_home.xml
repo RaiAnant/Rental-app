@@ -75,6 +75,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/carButton"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="8dp"

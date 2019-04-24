@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.example.acer.rentapp.fragments.HomeFragment"
+    android:name = "com.example.acer.rentapp.fragments.RentalListFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".HomeActivity"
-    android:id="@+id/eventFragment" />
+    tools:context=".RentalListActivity"
+    tools:showIn="@layout/activity_rental_list"
+    android:id="@+id/infoFragment" />
