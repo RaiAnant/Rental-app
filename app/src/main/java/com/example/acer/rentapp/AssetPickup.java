@@ -1,6 +1,7 @@
 package com.example.acer.rentapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.acer.rentapp.model.Asset;
+import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 
 
@@ -29,6 +31,7 @@ import static android.content.ContentValues.TAG;
 public class AssetPickup extends AppCompatActivity {
 
     public Asset assetData;
+    public User  lender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,49 @@ public class AssetPickup extends AppCompatActivity {
             public void onFailure(Call<Asset> call, Throwable t) {
                 Log.d("FAILED", t.getMessage());
 
+            }
+        });
+
+    }
+
+    public void lenderInfo() {
+        Log.d(TAG, "Login");
+
+        final ProgressDialog progressDialog = new ProgressDialog(AssetPickup.this,
+                R.style.Theme_AppCompat_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
+
+
+        GetUserDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetUserDataService.class);
+
+        Map<String, String> query = new HashMap<>();
+        query.put("USER_ID", "put lender_id here");
+        Log.d("where", "outside response");
+
+
+        Call<List<User>> call = service.getUserCheck(query);
+        call.enqueue(new Callback<List<User> >() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                Log.d("where", "inside response");
+
+                if (response.isSuccessful()) {
+                    List<User> data= response.body();
+
+
+
+                }else {
+                    Log.d("SUCCESS BUT NO DATA", "NO DATA");
+                    Toast.makeText(AssetPickup.this, "NO RESPONSE", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("FAILED", t.getMessage());
+                Toast.makeText(AssetPickup.this, "FAILED", Toast.LENGTH_LONG).show();
             }
         });
 
