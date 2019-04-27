@@ -1,7 +1,10 @@
 package com.example.acer.rentapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -18,6 +21,7 @@ import com.example.acer.rentapp.network.RetrofitClientInstance;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,12 +37,14 @@ public class LoginActivity extends AppCompatActivity {
     public EditText _passwordText;
     public Button _loginButton;
     public TextView _signupLink;
-    public List<User> userData;
+    public static User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        chckLogin();
 
         _emailText = findViewById(R.id.input_email);
         _passwordText = findViewById(R.id.input_password);
@@ -67,10 +73,10 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         Log.d(TAG, "Login");
 
-//        if (!validate()) {
-//            onLoginFailed();
-//            return;
-//        }
+        if (!validate()) {
+            onLoginFailed();
+            return;
+        }
 
         _loginButton.setEnabled(false);
 
@@ -99,24 +105,21 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     List<User> data= response.body();
-                    userData = data;
-                    Log.d("Response123",data.toString()+data.size());
+
                     if(data.size()==0){
+                        progressDialog.dismiss();
                         onLoginFailed();
                         return;
+                    }else{
+                        user = data.get(0);
+                        saveUserData(user);
+                        progressDialog.dismiss();
+                        onLoginSuccess();
                     }
-//
-//                    for (User user : response.body()) {
-//                        Log.wtf("Response", "" + user.getUserName());
-//                        Toast.makeText(LoginActivity.this, user.getUserName(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    Log.d("data--",data.toString());
-//                    Log.d("SUCCESS", response.raw().toString());
 
                 } else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
-                    Toast.makeText(LoginActivity.this, "FUCKED UP BUT GOT RESPONSE", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "NO RESPONSE", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -126,21 +129,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        if(userData==null || userData.size()==0){
-                            onLoginFailed();
-
-                        }else{
-                            onLoginSuccess();
-                        }
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
     }
 
 
@@ -148,6 +136,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
+                user = new User(data.getStringExtra(getString(R.string.usr_id)),data.getStringExtra(getString(R.string.usr_name)),data.getStringExtra(getString(R.string.usr_loc)),data.getStringExtra(getString(R.string.usr_cont)),data.getStringExtra(getString(R.string.password)));
+                saveUserData(user);
                 startHomeActivity();
                 this.finish();
             }
@@ -179,14 +169,14 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+        if (email.isEmpty() || email.length()<4) {
+            _emailText.setError("userName should be at least 5 characters");
             valid = false;
         } else {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 4) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
@@ -199,5 +189,27 @@ public class LoginActivity extends AppCompatActivity {
     public void startHomeActivity(){
         Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
         startActivity(intent);
+    }
+
+    public void chckLogin(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String usr_name = sharedPref.getString(getString(R.string.usr_id), "");
+        if(usr_name.compareTo("")!=0){
+            Toast.makeText(LoginActivity.this, usr_name, Toast.LENGTH_LONG).show();
+            user  = new User(sharedPref.getString(getString(R.string.usr_id), ""),sharedPref.getString(getString(R.string.usr_name), ""),sharedPref.getString(getString(R.string.usr_loc), ""),sharedPref.getString(getString(R.string.usr_cont), ""),sharedPref.getString(getString(R.string.password), ""));
+            startHomeActivity();
+            finish();
+        }
+    }
+
+    public void saveUserData(User user){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.usr_id), user.getUserName());
+        editor.putString(getString(R.string.usr_name), user.getName());
+        editor.putString(getString(R.string.usr_loc), user.getLocation());
+        editor.putString(getString(R.string.usr_cont), user.getPhno());
+        editor.putString(getString(R.string.password), user.getPassword());
+        editor.apply();
     }
 }

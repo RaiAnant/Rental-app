@@ -4,17 +4,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.acer.rentapp.R;
+import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.User;
+
+import java.util.List;
 
 public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
 
-    private User[] users;
+    private List<Asset> assets;
 
-    public RentAdapter(User[] users){
-        this.users = users;
+    public RentAdapter(List<Asset> assets){
+        this.assets = assets;
     }
 
     @Override
@@ -27,22 +31,33 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(users[position].getName());
-        holder.usrname.setText(users[position].getUserName());
+        Asset asset = assets.get(position);
+        holder.name.setText(asset.getAssetName());
+        holder.cost.setText(asset.getCharges());
+        holder.location.setText(asset.getPickupLocation());
+        if(asset.getAssetType().compareTo("Car")==0){
+            holder.img.setImageResource(R.drawable.bike);
+        }else{
+            holder.img.setImageResource(R.drawable.car);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return users.length;
+        return assets.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
-        public TextView usrname;
+        public TextView cost;
+        public TextView location;
+        public ImageView img;
         public ViewHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.list_text_name);
-            this.usrname = (TextView) itemView.findViewById(R.id.list_text_usrname);
+            this.cost = (TextView) itemView.findViewById(R.id.cost);
+            this.location  = (TextView) itemView.findViewById(R.id.Location);
+            this.img = (ImageView) itemView.findViewById(R.id.logo);
         }
     }
 

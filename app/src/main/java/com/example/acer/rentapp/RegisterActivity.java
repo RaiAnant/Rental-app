@@ -1,6 +1,9 @@
 package com.example.acer.rentapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +20,7 @@ import com.example.acer.rentapp.network.RetrofitClientInstance;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,11 +73,11 @@ public class RegisterActivity extends AppCompatActivity {
     public void signup() {
         Log.d(TAG, "Signup");
 
-//        if (!validate()) {
-//            onSignupFailed();
-//            return;
-//        }
-//
+        if (!validate()) {
+            onSignupFailed();
+            return;
+        }
+
          boolean isSuccess = false;
         _signupButton.setEnabled(false);
 
@@ -85,11 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         GetUserDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetUserDataService.class);
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-        String location = _location.getSelectedItem().toString();
-        String phNo = _phNoText.getText().toString();
+        final String name = _nameText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
+        final String location = _location.getSelectedItem().toString();
+        final String phNo = _phNoText.getText().toString();
 
         Map<String, String> query = new HashMap<>();
         query.put("USER_ID", email);
@@ -107,54 +111,38 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("where", "inside response");
 
                 if (response.isSuccessful()) {
-                    User data= response.body();
-                    userData = data;
-                    if(data!=null)
-                        Log.d("12345",userData.getUserName()+" "+_emailText.getText().toString());
-
-//
-//                    for (User user : response.body()) {
-//                        Log.wtf("Response", "" + user.getUserName());
-//                        Toast.makeText(LoginActivity.this, user.getUserName(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    Log.d("data--",data.toString());
-//                    Log.d("SUCCESS", response.raw().toString());
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra(getString(R.string.usr_id), email);
+                    returnIntent.putExtra(getString(R.string.usr_name), name);
+                    returnIntent.putExtra(getString(R.string.usr_loc), location);
+                    returnIntent.putExtra(getString(R.string.usr_cont), phNo);
+                    returnIntent.putExtra(getString(R.string.password), password);
+                    progressDialog.dismiss();
+                    onSignupSuccess(returnIntent);
 
                 } else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
-                    Toast.makeText(RegisterActivity.this, "FUCKED UP BUT GOT RESPONSE", Toast.LENGTH_LONG).show();
+                    _emailText.setError("User name already exist");
+                    progressDialog.dismiss();
+                    _signupButton.setEnabled(true);
+
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.d("FAILED", t.getMessage());
                 Toast.makeText(RegisterActivity.this, "FAILED", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+                _signupButton.setEnabled(true);
             }
         });
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-//                        Log.d("register123",);
-//                        Log.d("123456",userData.getUserName()+" "+_emailText.getText().toString());
-                        if(userData!=null && userData.getUserName().compareTo(_emailText.getText().toString())==0) {
-                            onSignupSuccess();
-                        }else{
-                            onSignupFailed();
-                        }
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 10000);
     }
 
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(Intent returnIntent) {
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+        setResult(RESULT_OK, returnIntent);
         finish();
     }
 
@@ -170,26 +158,33 @@ public class RegisterActivity extends AppCompatActivity {
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-
-        if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+        String phno = _phNoText.getText().toString();
+        if (name.isEmpty() || name.length() < 4) {
+            _nameText.setError("at least 4 characters");
             valid = false;
         } else {
             _nameText.setError(null);
         }
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+        if (email.isEmpty() || name.length() < 4) {
+            _emailText.setError("at least 4 characters");
             valid = false;
         } else {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 ) {
+            _passwordText.setError("should be greater than 4 characters");
             valid = false;
         } else {
             _passwordText.setError(null);
+        }
+
+        if(phno.isEmpty() || !android.util.Patterns.PHONE.matcher(phno).matches()) {
+            _phNoText.setError("not a valid phone number");
+            valid = false;
+        } else {
+            _phNoText.setError(null);
         }
 
         return valid;
