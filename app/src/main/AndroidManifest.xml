@@ -11,31 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
+
         <activity android:name=".LoginActivity">
-=======
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity">
->>>>>>> 88ac39afc4985acd85d83b1346cbd3edd6f9d399
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".RentalListActivity"></activity>
-=======
-        <activity android:name=".RentalListActivity" />
+        <activity android:name=".RentalListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".AssetPickup"
             android:label="@string/title_activity_asset_pickup"
             android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> 88ac39afc4985acd85d83b1346cbd3edd6f9d399
     </application>
 
 </manifest>

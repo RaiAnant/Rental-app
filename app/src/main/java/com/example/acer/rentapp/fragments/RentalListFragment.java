@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.acer.rentapp.GetAssetDataService;
 import com.example.acer.rentapp.R;
+import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.adapters.RentAdapter;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.User;
@@ -41,6 +42,7 @@ public class RentalListFragment extends Fragment {
     public RentAdapter adapter ;
     public RecyclerView recyclerView;
     public String type;
+    public Context context = getActivity();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,13 +59,7 @@ public class RentalListFragment extends Fragment {
         assetData = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getAssetList();
-//        assetData.add(new Asset("SNJF","FKJKFG","FGKKFG","GFKGGNG","GFGFGF","kbhbh","krlf","heg","jnkjn","10","jbkbj"));
-//        assetData.add(new Asset("SNJF","FKJKFG","fhdbfdk","GFKGGNG","GFGFGF","jlhu","fgkkfg","jhh","nkjbj","15","jkbbjh"));
-//        adapter = new RentAdapter(assetData);
-//
-//
-//        recyclerView.setAdapter(adapter);
+
 
         return v;
     }
@@ -103,7 +99,7 @@ public class RentalListFragment extends Fragment {
                         }
                     }
 //                    Log.d("list12",String.valueOf(assetData.size()));
-                    adapter = new RentAdapter(assetData);
+                    adapter = new RentAdapter(assetData,context);
                     recyclerView.setAdapter(adapter);
 //
 //                    for (User user : response.body()) {

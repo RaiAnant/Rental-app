@@ -1,5 +1,7 @@
 package com.example.acer.rentapp.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.acer.rentapp.R;
+import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.User;
 
@@ -16,9 +19,11 @@ import java.util.List;
 public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
 
     private List<Asset> assets;
+    private  Context context;
 
-    public RentAdapter(List<Asset> assets){
+    public RentAdapter(List<Asset> assets, Context context){
         this.assets = assets;
+        this.context = context;
     }
 
     @Override
@@ -40,6 +45,12 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
         }else{
             holder.img.setImageResource(R.drawable.car);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,RentalListActivity.class);
+            }
+        });
     }
 
     @Override
@@ -52,12 +63,14 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
         public TextView cost;
         public TextView location;
         public ImageView img;
+        public View itemView;
         public ViewHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.list_text_name);
             this.cost = (TextView) itemView.findViewById(R.id.cost);
             this.location  = (TextView) itemView.findViewById(R.id.Location);
             this.img = (ImageView) itemView.findViewById(R.id.logo);
+            this.itemView = itemView;
         }
     }
 
