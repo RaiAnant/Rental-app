@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.acer.rentapp.AssetPickup;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.model.Asset;
@@ -36,7 +37,7 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Asset asset = assets.get(position);
+        final Asset asset = assets.get(position);
         holder.name.setText(asset.getAssetName());
         holder.cost.setText(asset.getCharges());
         holder.location.setText(asset.getPickupLocation());
@@ -48,7 +49,9 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,RentalListActivity.class);
+                Intent intent = new Intent(context,AssetPickup.class);
+                intent.putExtra("Asset",asset);
+                context.startActivity(intent);
             }
         });
     }

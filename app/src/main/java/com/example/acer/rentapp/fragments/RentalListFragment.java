@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +43,7 @@ public class RentalListFragment extends Fragment {
     public RentAdapter adapter ;
     public RecyclerView recyclerView;
     public String type;
-    public Context context = getActivity();
+    public Context context ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,13 +54,18 @@ public class RentalListFragment extends Fragment {
 
 
         Intent intent = getActivity().getIntent();
-        type = intent.getStringExtra("type");
+        if(savedInstanceState!=null){
+            type = savedInstanceState.getString("type");
+        }else{
+            type = intent.getStringExtra("type");
+        }
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         assetData = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        context = getActivity();
+        getAssetList();
 
         return v;
     }
@@ -101,14 +107,6 @@ public class RentalListFragment extends Fragment {
 //                    Log.d("list12",String.valueOf(assetData.size()));
                     adapter = new RentAdapter(assetData,context);
                     recyclerView.setAdapter(adapter);
-//
-//                    for (User user : response.body()) {
-//                        Log.wtf("Response", "" + user.getUserName());
-//                        Toast.makeText(LoginActivity.this, user.getUserName(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    Log.d("data--",data.toString());
-//                    Log.d("SUCCESS", response.raw().toString());
 
                 } else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
@@ -126,5 +124,9 @@ public class RentalListFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("type",type);
+    }
 }

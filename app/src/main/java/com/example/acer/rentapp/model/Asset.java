@@ -2,7 +2,9 @@ package com.example.acer.rentapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Asset {
+import java.io.Serializable;
+
+public class Asset implements Serializable {
     @SerializedName("ASSET_ID")
     private String assetId;
     @SerializedName("ASSET_TYPE")
