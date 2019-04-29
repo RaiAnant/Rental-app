@@ -20,7 +20,7 @@ public interface GetUserDataService {
     Call<User>  postUserCheck (@QueryMap Map<String, String> options);
 
     @PUT("user")
-    Call<List<User>>  putUserCheck (@QueryMap Map<String, String> options);
+    Call<User>  putUserCheck (@QueryMap Map<String, String> options);
 
     @DELETE("user")
     Call<List<User>>  delUserCheck (@QueryMap Map<String, String> options);
