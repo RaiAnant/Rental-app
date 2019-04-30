@@ -37,7 +37,11 @@
         <activity android:name=".RecievedRequests" />
         <activity android:name=".SeeRequestActivity" />
         <activity android:name=".RequestDetails" />
-        <activity android:name=".SentReqDetails"></activity>
+        <activity android:name=".SentReqDetails" />
+        <activity
+            android:name=".EditAdminDetails"
+            android:label="@string/title_activity_edit_admin_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
