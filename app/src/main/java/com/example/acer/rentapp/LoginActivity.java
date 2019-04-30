@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.acer.rentapp.model.Admin;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     public Button _loginButton;
     public TextView _signupLink;
     public static User user;
+    public static Admin admin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,6 +133,67 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    public void adminlogin() {
+        Log.d(TAG, " Admin Login");
+
+        if (!validate()) {
+            onLoginFailed();
+            return;
+        }
+
+        _loginButton.setEnabled(false);
+
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.Theme_AppCompat_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
+        String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        GetAdminDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAdminDataService.class);
+
+        Map<String, String> query = new HashMap<>();
+        query.put("ADMIN_ID", email);
+        query.put("ADMIN_PASSWORD", password);
+        Log.d("where", "outside response");
+
+
+        Call<List<Admin>> call = service.getAdminCheck(query);
+        call.enqueue(new Callback<List<Admin> >() {
+            @Override
+            public void onResponse(Call<List<Admin>> call, Response<List<Admin>> response) {
+                Log.d("where", "inside response");
+
+                if (response.isSuccessful()) {
+                    List<Admin> data= response.body();
+
+                    if(data.size()==0){
+                        progressDialog.dismiss();
+                        onLoginFailed();
+                        return;
+                    }else{
+                        admin = data.get(0);
+                        saveUserData(user);
+                        progressDialog.dismiss();
+                        onLoginSuccess();
+                    }
+
+                } else {
+                    Log.d("SUCCESS BUT NO DATA", "NO DATA");
+                    Toast.makeText(LoginActivity.this, "NO RESPONSE", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Admin>> call, Throwable t) {
+                Log.d("FAILED", t.getMessage());
+                Toast.makeText(LoginActivity.this, "FAILED", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
