@@ -122,7 +122,7 @@ public class EditAdminDetails extends AppCompatActivity {
         }
 
         String pass = sharedPref.getString(getString(R.string.password), "");
-
+        Log.d("valid", "validate: "+pass);
         if(_oldPwdText.getText().toString().compareTo(pass)!=0){
             _oldPwdText.setError("invalid password");
             valid = false;

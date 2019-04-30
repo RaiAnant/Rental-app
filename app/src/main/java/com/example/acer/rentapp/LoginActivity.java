@@ -277,10 +277,10 @@ public class LoginActivity extends AppCompatActivity {
         if(usr_name.compareTo("")!=0){
             Toast.makeText(LoginActivity.this, usr_name, Toast.LENGTH_LONG).show();
             if(sharedPref.getString("admin", "").compareTo("no")==0) {
-                admin = new Admin(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""),sharedPref.getString(getString(R.string.password), ""));
+//                admin = new Admin(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""),sharedPref.getString(getString(R.string.password), ""));
                 startHomeActivity();
             }else{
-                user = new User(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""), sharedPref.getString(getString(R.string.usr_loc), ""), sharedPref.getString(getString(R.string.usr_cont), ""), sharedPref.getString(getString(R.string.password), ""));
+//                user = new User(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""), sharedPref.getString(getString(R.string.usr_loc), ""), sharedPref.getString(getString(R.string.usr_cont), ""), sharedPref.getString(getString(R.string.password), ""));
                 startAdminHomeActivity();
             }
             finish();

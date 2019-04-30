@@ -3,6 +3,7 @@ package com.example.acer.rentapp.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.acer.rentapp.AdminsUserView;
+import com.example.acer.rentapp.EditAdminDetails;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
 
@@ -22,6 +24,7 @@ public class AdminHomeFragment extends Fragment {
     public ImageButton assetImgButton;
     public ImageButton logout;
     public ImageButton profileImgButton;
+    public ImageButton editDetails;
 
 
     public AdminHomeFragment() {
@@ -46,6 +49,7 @@ public class AdminHomeFragment extends Fragment {
         assetImgButton = v.findViewById(R.id.asset);
         logout = v.findViewById(R.id.logout);
         profileImgButton = v.findViewById(R.id.profile);
+        editDetails = v.findViewById(R.id.editDetails);
         assetImgButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -74,6 +78,14 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),AdminsUserView.class);
+                startActivity(intent);
+            }
+        });
+
+        editDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),EditAdminDetails.class);
                 startActivity(intent);
             }
         });
