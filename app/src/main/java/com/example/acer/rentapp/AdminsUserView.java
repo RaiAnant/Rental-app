@@ -1,11 +1,11 @@
 package com.example.acer.rentapp;
 
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.acer.rentapp.interfaces.GetUserDataService;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 

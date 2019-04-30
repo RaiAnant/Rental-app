@@ -1,4 +1,4 @@
-package com.example.acer.rentapp;
+package com.example.acer.rentapp.interfaces;
 
 import com.example.acer.rentapp.model.Admin;
 import com.example.acer.rentapp.model.User;

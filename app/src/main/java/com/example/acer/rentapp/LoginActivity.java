@@ -1,7 +1,6 @@
 package com.example.acer.rentapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.acer.rentapp.interfaces.GetAdminDataService;
+import com.example.acer.rentapp.interfaces.GetUserDataService;
 import com.example.acer.rentapp.model.Admin;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
@@ -22,7 +23,6 @@ import com.example.acer.rentapp.network.RetrofitClientInstance;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.prefs.Preferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;

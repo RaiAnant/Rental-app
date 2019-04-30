@@ -8,9 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.acer.rentapp.adapters.RentAdapter;
 import com.example.acer.rentapp.adapters.RequestAdapter;
-import com.example.acer.rentapp.model.Asset;
+import com.example.acer.rentapp.interfaces.GetRequestDataService;
 import com.example.acer.rentapp.model.Request;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 

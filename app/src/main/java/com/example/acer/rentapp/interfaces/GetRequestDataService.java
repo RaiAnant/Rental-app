@@ -1,4 +1,4 @@
-package com.example.acer.rentapp;
+package com.example.acer.rentapp.interfaces;
 
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.Request;

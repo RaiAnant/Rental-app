@@ -1,8 +1,5 @@
 package com.example.acer.rentapp.fragments;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,31 +7,14 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.acer.rentapp.GetAssetDataService;
-import com.example.acer.rentapp.LoginActivity;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.UserDetailsActivity;
-import com.example.acer.rentapp.model.Asset;
-import com.example.acer.rentapp.model.User;
-import com.example.acer.rentapp.network.RetrofitClientInstance;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment {

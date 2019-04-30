@@ -1,9 +1,7 @@
 package com.example.acer.rentapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,13 +12,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.acer.rentapp.interfaces.GetUserDataService;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
