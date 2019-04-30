@@ -130,7 +130,7 @@ public class RequestDetails extends AppCompatActivity {
         Map<String, String> query = new HashMap<>();
         query.put("ASSET_ID", asset.getAssetId());
         query.put("CUSTOMER_ID", "");
-        query.put("PICKUP_LOCATION", "");
+        query.put("PICKUP_LOCATION", "" );
         query.put("RENT_LOCATION", "");
 
 
