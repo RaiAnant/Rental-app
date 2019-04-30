@@ -53,7 +53,7 @@ public class SentReqDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        asset = (Asset) intent.getSerializableExtra("Asset");
+        requestData = (Request) intent.getSerializableExtra("Asset");
 
         assetImg = findViewById(R.id.imageView2);
         assetName = findViewById(R.id.assetNmae);

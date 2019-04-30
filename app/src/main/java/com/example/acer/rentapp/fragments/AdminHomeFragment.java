@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.acer.rentapp.AdminsUserView;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
 
 public class AdminHomeFragment extends Fragment {
-    public ImageButton carImgButton;
+    public ImageButton assetImgButton;
     public ImageButton logout;
+    public ImageButton profileImgButton;
 
 
     public AdminHomeFragment() {
@@ -41,14 +43,15 @@ public class AdminHomeFragment extends Fragment {
         float heightDp = getResources().getDisplayMetrics().heightPixels / 3;
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appbar.getLayoutParams();
         lp.height = (int) heightDp;
-        carImgButton = v.findViewById(R.id.carButton);
+        assetImgButton = v.findViewById(R.id.asset);
         logout = v.findViewById(R.id.logout);
-        carImgButton.setOnClickListener(new View.OnClickListener() {
+        profileImgButton = v.findViewById(R.id.profile);
+        assetImgButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RentalListActivity.class);
-                intent.putExtra("type","car");
+                intent.putExtra("type","any");
                 startActivity(intent);
             }
         });
@@ -62,8 +65,16 @@ public class AdminHomeFragment extends Fragment {
                 editor.putString(getString(R.string.usr_loc), "");
                 editor.putString(getString(R.string.usr_cont), "");
                 editor.putString(getString(R.string.password), "");
+                editor.putString("admin","");
                 editor.apply();
                 getActivity().finish();
+            }
+        });
+        profileImgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),AdminsUserView.class);
+                startActivity(intent);
             }
         });
         return v;

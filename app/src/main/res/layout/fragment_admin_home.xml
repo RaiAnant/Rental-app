@@ -75,19 +75,20 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/carButton"
+                android:id="@+id/asset"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 android:layout_weight="1"
                 android:background="@color/colorBg"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/car" />
 
             <ImageButton
+                android:id="@+id/profile"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="8dp"
@@ -97,7 +98,7 @@
                 android:layout_weight="1"
                 android:background="@color/colorBg"
                 android:scaleType="fitCenter"
-                android:src="@drawable/bike" />
+                android:src="@drawable/profile" />
 
         </LinearLayout>
 

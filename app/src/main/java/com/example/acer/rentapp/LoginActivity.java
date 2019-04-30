@@ -10,6 +10,7 @@ import android.util.Log;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public TextView _signupLink;
     public static User user;
     public static Admin admin;
+    public CheckBox adminChck;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,18 @@ public class LoginActivity extends AppCompatActivity {
         _passwordText = findViewById(R.id.input_password);
         _loginButton = findViewById(R.id.btn_login);
         _signupLink = findViewById(R.id.link_signup);
+        adminChck = findViewById(R.id.admin);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                login();
+                if(!adminChck.isChecked()) {
+                    login();
+                    Log.d(TAG, "onClick: startHome");
+                }else{
+                    adminlogin();
+                }
             }
         });
 
@@ -176,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                         return;
                     }else{
                         admin = data.get(0);
-                        saveUserData(user);
+                        saveAdminData(admin);
                         progressDialog.dismiss();
                         onLoginSuccess();
                     }
@@ -216,7 +224,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        startHomeActivity();
+        if(adminChck.isChecked()){
+            startAdminHomeActivity();
+        }else {
+            startHomeActivity();
+        }
         finish();
     }
 
@@ -250,7 +262,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void startHomeActivity(){
+        Log.d(TAG, "startHomeActivity: ");
         Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+        startActivity(intent);
+    }
+    public void startAdminHomeActivity(){
+        Intent intent = new Intent(LoginActivity.this,AdminHome.class);
         startActivity(intent);
     }
 
@@ -259,8 +276,13 @@ public class LoginActivity extends AppCompatActivity {
         String usr_name = sharedPref.getString(getString(R.string.usr_id), "");
         if(usr_name.compareTo("")!=0){
             Toast.makeText(LoginActivity.this, usr_name, Toast.LENGTH_LONG).show();
-            user  = new User(sharedPref.getString(getString(R.string.usr_id), ""),sharedPref.getString(getString(R.string.usr_name), ""),sharedPref.getString(getString(R.string.usr_loc), ""),sharedPref.getString(getString(R.string.usr_cont), ""),sharedPref.getString(getString(R.string.password), ""));
-            startHomeActivity();
+            if(sharedPref.getString("admin", "").compareTo("no")==0) {
+                admin = new Admin(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""),sharedPref.getString(getString(R.string.password), ""));
+                startHomeActivity();
+            }else{
+                user = new User(sharedPref.getString(getString(R.string.usr_id), ""), sharedPref.getString(getString(R.string.usr_name), ""), sharedPref.getString(getString(R.string.usr_loc), ""), sharedPref.getString(getString(R.string.usr_cont), ""), sharedPref.getString(getString(R.string.password), ""));
+                startAdminHomeActivity();
+            }
             finish();
         }
     }
@@ -268,11 +290,24 @@ public class LoginActivity extends AppCompatActivity {
     public void saveUserData(User user){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.usr_id), user.getUserName());
-        editor.putString(getString(R.string.usr_name), user.getName());
+
+        editor.putString("admin", "no");
         editor.putString(getString(R.string.usr_loc), user.getLocation());
         editor.putString(getString(R.string.usr_cont), user.getPhno());
+
+        editor.putString(getString(R.string.usr_id), user.getUserName());
+        editor.putString(getString(R.string.usr_name), user.getName());
         editor.putString(getString(R.string.password), user.getPassword());
+        editor.apply();
+    }
+    public void saveAdminData(Admin admin){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("admin", "yes");
+
+        editor.putString(getString(R.string.usr_id), admin.getAdminID());
+        editor.putString(getString(R.string.usr_name), admin.getName());
+        editor.putString(getString(R.string.password), admin.getPassword());
         editor.apply();
     }
 }

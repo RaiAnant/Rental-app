@@ -72,7 +72,7 @@ public class RequestDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!isLenderChildAdded) {
-                    lenderInfo();
+                    customreInfo();
                     isLenderChildAdded = true;
                     buttonUser.setEnabled(false);
                 }
@@ -89,7 +89,7 @@ public class RequestDetails extends AppCompatActivity {
         getAsset();
     }
 
-    public void lenderInfo() {
+    public void customreInfo() {
         Log.d(TAG, "Login");
 
 //        final ProgressDialog progressDialog = new ProgressDialog(AssetPickup.this,
@@ -103,8 +103,10 @@ public class RequestDetails extends AppCompatActivity {
         GetUserDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetUserDataService.class);
 
         Map<String, String> query = new HashMap<>();
+        Log.d("custid", request.getCustomerId());
         query.put("USER_ID", request.getCustomerId());
         Log.d("where", "outside response");
+
 
 
         Call<List<User>> call = service.getUserCheck(query);
@@ -136,13 +138,12 @@ public class RequestDetails extends AppCompatActivity {
     public void lendToCustomer() {
         Log.d("Lend", "Customer");
         GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
-
         Map<String, String> query = new HashMap<>();
         query.put("ASSET_ID", request.getAssetId());
         query.put("CUSTOMER_ID", request.getCustomerId());
         query.put("PICKUP_TIME", request.getPickupTime());
         query.put("DROP_TIME", request.getDropTime());
-
+        //Log.d("time", timeSplitStart[2]+"-"+timeSplitStart[1]+"-"+timeSplitStart[0]+" "+startTime[1].substring(0,startTime[1].indexOf("Z")) +"----"+timeSplitEnd[2]+"-"+timeSplitEnd[1]+"-"+timeSplitEnd[0]+" "+endTime[1].substring(0,endTime[1].indexOf("Z")));
 
 
         Call<Request> call = service.putRequestCheck(query);

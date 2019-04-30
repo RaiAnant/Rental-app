@@ -133,6 +133,19 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
                 }
             }
         });
+        if(pref.getString("admin","").compareTo("yes")==0){
+            if(asset.getIsAvail().toLowerCase().compareTo("yes")==0){
+                rentButton.setText("Block");
+            }else{
+                rentButton.setText("UnBlock");
+            }
+            rentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
         rentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

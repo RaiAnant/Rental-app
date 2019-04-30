@@ -76,7 +76,6 @@ public class RentalListFragment extends Fragment {
         GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
 
         Map<String, String> query = new HashMap<>();
-        query.put("IS_AVAIL", "YES");
         Log.d("where", "outside response");
 
 
@@ -99,6 +98,8 @@ public class RentalListFragment extends Fragment {
                                 i--;
                                 continue;
                             }
+                        }else{
+                            break;
                         }
 
                     }

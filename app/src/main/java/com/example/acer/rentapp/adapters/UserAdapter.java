@@ -40,16 +40,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.cost.setText(user.getUserName());
         holder.location.setText(user.getLocation());
         holder.img.setImageResource(R.drawable.profile);
+        holder.phNo.setText(user.getPhno());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(context,AssetPickup.class);
-//                intent.putExtra("caller","ASSET_LIST");
-//                intent.putExtra("Asset",asset);
-//                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -61,6 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public TextView name;
         public TextView cost;
         public TextView location;
+        public TextView phNo;
         public ImageView img;
         public View itemView;
         public ViewHolder(View itemView) {
@@ -70,6 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             this.location  = (TextView) itemView.findViewById(R.id.Location);
             this.img = (ImageView) itemView.findViewById(R.id.logo);
             this.itemView = itemView;
+            this.phNo = itemView.findViewById(R.id.contact);
         }
     }
 
