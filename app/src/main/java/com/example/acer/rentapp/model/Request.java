@@ -2,7 +2,9 @@ package com.example.acer.rentapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
 
     @SerializedName("ASSET_ID")
     private String assetId;
@@ -14,8 +16,6 @@ public class Request {
     private String pickupTime;
     @SerializedName("DROP_TIME")
     private String dropTime;
-    @SerializedName("DROP_LOCATION")
-    private String dropLocation;
     @SerializedName("RENT")
     private String rent;
 
@@ -25,7 +25,6 @@ public class Request {
         this.status = status;
         this.pickupTime = pickupTime;
         this.dropTime = dropTime;
-        this.dropLocation = dropLocation;
         this.rent = rent;
     }
 
@@ -69,13 +68,6 @@ public class Request {
         this.dropTime = dropTime;
     }
 
-    public String getDropLocation() {
-        return dropLocation;
-    }
-
-    public void setDropLocation(String dropLocation) {
-        this.dropLocation = dropLocation;
-    }
 
     public String getRent() {
         return rent;

@@ -11,46 +11,45 @@ import android.widget.TextView;
 
 import com.example.acer.rentapp.AssetPickup;
 import com.example.acer.rentapp.R;
-import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.model.Asset;
-import com.example.acer.rentapp.model.User;
+import com.example.acer.rentapp.model.Request;
 
 import java.util.List;
 
-public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
+public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
 
-    private List<Asset> assets;
-    private  Context context;
+    private List<Request> assets;
+    private Context context;
 
-    public RentAdapter(List<Asset> assets, Context context){
+    public RequestAdapter(List<Request> assets, Context context){
         this.assets = assets;
         this.context = context;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RequestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem = layoutInflater.inflate(R.layout.rent_list_item,parent,false);
-        ViewHolder viewHolder = new ViewHolder(listItem);
+        View listItem = layoutInflater.inflate(R.layout.request_items,parent,false);
+        RequestAdapter.ViewHolder viewHolder = new RequestAdapter.ViewHolder(listItem);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Asset asset = assets.get(position);
-        holder.name.setText(asset.getAssetName());
-        holder.cost.setText(asset.getCharges());
-        holder.location.setText(asset.getPickupLocation());
-        if(asset.getAssetType().compareTo("Car")==0){
-            holder.img.setImageResource(R.drawable.bike);
+    public void onBindViewHolder(RequestAdapter.ViewHolder holder, int position) {
+        final Request asset = assets.get(position);
+        holder.name.setText(asset.getAssetId());
+        holder.cost.setText(asset.getRent());
+        holder.location.setText(asset.getCustomerId());
+        if(asset.getStatus().compareTo("pending")==0){
+            holder.img.setImageResource(R.drawable.cross);
         }else{
-            holder.img.setImageResource(R.drawable.car);
+            holder.img.setImageResource(R.drawable.tick);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,AssetPickup.class);
-                intent.putExtra("caller","ASSET_LIST");
+                intent.putExtra("caller","REQUEST_LIST");
                 intent.putExtra("Asset",asset);
                 context.startActivity(intent);
             }

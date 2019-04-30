@@ -65,7 +65,6 @@ public class RentalListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         context = getActivity();
-        getAssetList();
 
         return v;
     }
@@ -118,6 +117,12 @@ public class RentalListFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAssetList();
     }
 
     @Override

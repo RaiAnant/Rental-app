@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.acer.rentapp.model.Asset;
+import com.example.acer.rentapp.model.Request;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 
@@ -42,7 +43,7 @@ import static android.content.ContentValues.TAG;
 
 public class AssetPickup extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
 
-    public Asset assetData;
+    public Request requestData;
     public Asset asset;
     public ImageView assetImg;
     public TextView assetName;
@@ -79,13 +80,20 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
 
     public User  lender;
     public SharedPreferences pref;
+    public String caller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asset_pickup);
         Intent intent = getIntent();
-        asset = (Asset) intent.getSerializableExtra("Asset");
+        caller = intent.getStringExtra("caller");
+        if(caller.compareTo("ASSET_LIST")==0){
+            asset = (Asset) intent.getSerializableExtra("Asset");
+        }else if(caller.compareTo("REQUEST_LIST")==0){
+            asset = (Asset) intent.getSerializableExtra("Asset");
+        }
+
         assetImg = findViewById(R.id.imageView2);
         assetName = findViewById(R.id.assetNmae);
         assetId = findViewById(R.id.assetId);
@@ -137,7 +145,7 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
     public void rentAsset() {
         Log.d(TAG, "rent");
 
-        GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
+        GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
 
         Date date=new Date(20,02,22);
         Timestamp timestamp = new Timestamp(date.getTime());
@@ -151,16 +159,17 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
         Log.d("where", "outside response");
 
 
-        Call<Asset> call = service.putAssetCheck(query);
-        call.enqueue(new Callback<Asset>() {
+        Call<Request> call = service.postRequestCheck(query);
+        call.enqueue(new Callback<Request>() {
             @Override
-            public void onResponse(Call<Asset> call, Response<Asset> response) {
+            public void onResponse(Call<Request> call, Response<Request> response) {
                 Log.d("where", "inside response");
 
                 if (response.isSuccessful()) {
-                    Asset data = response.body();
-                    assetData = data;
-                    Log.d("Response123", assetData.toString());
+                    requestData = response.body();
+
+                    Log.d("Response123", requestData.toString());
+                    Toast.makeText(AssetPickup.this , "Request Sent", Toast.LENGTH_LONG).show();
 
 
 
@@ -171,7 +180,7 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             }
 
             @Override
-            public void onFailure(Call<Asset> call, Throwable t) {
+            public void onFailure(Call<Request> call, Throwable t) {
                 Log.d("FAILED", t.getMessage());
 
             }
@@ -183,8 +192,10 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
         if(flagfortime==1){
+            Log.d("start time2",String.valueOf(i)+":"+String.valueOf(i1));
             pckUpTime.setText(getFormattedTimeString(i,i1));
         }else{
+            Log.d("end time2",String.valueOf(i)+":"+String.valueOf(i1));
             dropTime.setText(getFormattedTimeString(i,i1));
         }
     }
@@ -313,7 +324,9 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
 
         pckUpDate.setText(getFormattedDateString(day,month,year));
         dropDate.setText(getFormattedDateString(day,month,year));
+        Log.d("start time1",String.valueOf(hour)+":"+String.valueOf(minute));
         pckUpTime.setText(getFormattedTimeString(hour,minute));
+        Log.d("end time1",String.valueOf(hour)+":"+String.valueOf(minute));
         dropTime.setText(getFormattedTimeString(hour,minute));
         
         startDateBut.setOnClickListener(new View.OnClickListener() {
@@ -329,7 +342,7 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
+                newFragment.show(getSupportFragmentManager(), "datePicker2");
                 flagfordate = 2;
 
             }
@@ -338,7 +351,7 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
+                newFragment.show(getSupportFragmentManager(), "timePicker");
                 flagfortime = 1;
 
             }
@@ -347,26 +360,34 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
+                newFragment.show(getSupportFragmentManager(), "tiePicker2");
                 flagfortime = 2;
             }
         });
 
-
+        submitBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rentAsset();
+                finish();
+            }
+        });
 
         linearLayout.addView(v);
     }
 
     public String getFormattedTimeString(int i,int i1){
-        String format = "%d:%d";
+        String hr = String.valueOf(i);
+        String min = String.valueOf(i1);
         if(i/10==0&&i1/10==0){
-            format = "0%d:0%d";
+            return "0"+hr+":"+"0"+min;
         }else if(i/10==0){
-            format = "%0d:%d";
+            return "0"+hr+":"+min;
         }else if(i1/10==0){
-            format = "%d:0%d";
+            return hr+":"+"0"+min;
+        }else{
+            return hr+":"+min;
         }
-        return String.format("%d:%d",hrSelected,minSelected);
     }
 
     public String getFormattedDateString(int day,int month,int year){
