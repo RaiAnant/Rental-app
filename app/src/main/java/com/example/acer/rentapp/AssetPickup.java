@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.acer.rentapp.model.Asset;
+import com.example.acer.rentapp.model.Request;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
 
@@ -38,7 +39,7 @@ import static android.content.ContentValues.TAG;
 
 public class AssetPickup extends AppCompatActivity {
 
-    public Asset assetData;
+    public Request requestData;
     public Asset asset;
     public ImageView assetImg;
     public TextView assetName;
@@ -113,7 +114,7 @@ public class AssetPickup extends AppCompatActivity {
     public void rentAsset() {
         Log.d(TAG, "rent");
 
-        GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
+        GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
 
         Date date=new Date(20,02,22);
         Timestamp timestamp = new Timestamp(date.getTime());
@@ -124,20 +125,20 @@ public class AssetPickup extends AppCompatActivity {
         query.put("ASSET_ID", "asset004");
         query.put("PICKUP_TIME", timestamp.toString());
         query.put("DROP_TIME", timestamp.toString());
-        query.put("ASSET_PICKUP", "YES");
         Log.d("where", "outside response");
 
 
-        Call<Asset> call = service.putAssetCheck(query);
-        call.enqueue(new Callback<Asset>() {
+        Call<Request> call = service.postRequestCheck(query);
+        call.enqueue(new Callback<Request>() {
             @Override
-            public void onResponse(Call<Asset> call, Response<Asset> response) {
+            public void onResponse(Call<Request> call, Response<Request> response) {
                 Log.d("where", "inside response");
 
                 if (response.isSuccessful()) {
-                    Asset data = response.body();
-                    assetData = data;
-                    Log.d("Response123", assetData.toString());
+                    requestData = response.body();
+
+                    Log.d("Response123", requestData.toString());
+                    Toast.makeText(AssetPickup.this , "Request Sent", Toast.LENGTH_LONG).show();
 
 //
 //                    for (User user : response.body()) {
@@ -155,7 +156,7 @@ public class AssetPickup extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Asset> call, Throwable t) {
+            public void onFailure(Call<Request> call, Throwable t) {
                 Log.d("FAILED", t.getMessage());
 
             }
