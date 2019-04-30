@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_admin_home, container, false);
         AppBarLayout appbar = (AppBarLayout) v.findViewById(R.id.appbar);
         float heightDp = getResources().getDisplayMetrics().heightPixels / 3;
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appbar.getLayoutParams();
