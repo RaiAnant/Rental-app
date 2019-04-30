@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.acer.rentapp.AssetPickup;
 import com.example.acer.rentapp.R;
+import com.example.acer.rentapp.RequestDetails;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.Request;
 
@@ -48,8 +49,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,AssetPickup.class);
-                intent.putExtra("caller","REQUEST_LIST");
+                Intent intent = new Intent(context,RequestDetails.class);
+
                 intent.putExtra("Asset",asset);
                 context.startActivity(intent);
             }

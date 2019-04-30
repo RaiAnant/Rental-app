@@ -28,14 +28,15 @@
         <activity
             android:name=".AssetPickup"
             android:label="@string/title_activity_asset_pickup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UserDetailsActivity" />
         android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AdminHome" />
         <activity android:name=".AdminsUserView" />
         <activity android:name=".SentRequests" />
         <activity android:name=".RecievedRequests" />
-        <activity android:name=".SeeRequestActivity"></activity>
+        <activity android:name=".SeeRequestActivity" />
+        <activity android:name=".RequestDetails"></activity>
     </application>
 
 </manifest>
