@@ -5,5 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminHome">
+    <include layout="@layout/admin_content_home" />
 
 </android.support.constraint.ConstraintLayout>
+
