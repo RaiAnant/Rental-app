@@ -2,6 +2,7 @@ package com.example.acer.rentapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.acer.rentapp.adapters.RentAdapter;
 import com.example.acer.rentapp.interfaces.GetAssetDataService;
+import com.example.acer.rentapp.interfaces.GetRequestDataService;
 import com.example.acer.rentapp.interfaces.GetUserDataService;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.Request;
@@ -120,6 +122,37 @@ public class RequestDetails extends AppCompatActivity {
         });
 
     }
+
+    public void lendToCustomer() {
+        Log.d("Lend", "Customer");
+        GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
+
+        Map<String, String> query = new HashMap<>();
+        query.put("ASSET_ID", asset.getAssetId());
+        query.put("CUSTOMER_ID", "");
+        query.put("PICKUP_LOCATION", "");
+        query.put("RENT_LOCATION", "");
+
+
+
+        Call<Request> call = service.putRequestCheck(query);
+        call.enqueue(new Callback<Request >() {
+            @Override
+            public void onResponse(Call<Request> call, Response<Request> response) {
+                Log.d("where", "inside response");
+
+                Toast.makeText(RequestDetails.this, "RENTED", Toast.LENGTH_LONG).show();
+
+            }
+            @Override
+            public void onFailure(Call<Request> call, Throwable t) {
+                Log.d("FAILED", t.getMessage());
+                Toast.makeText(RequestDetails.this, "FAILED", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 
     public void getAssetList() {
         Log.d(TAG, "Login");
