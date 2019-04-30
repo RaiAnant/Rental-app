@@ -12,11 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity
@@ -28,8 +23,15 @@
         <activity
             android:name=".AssetPickup"
             android:label="@string/title_activity_asset_pickup"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".UserDetailsActivity"></activity>
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UserDetailsActivity" />
         <activity android:name=".AdminHome" />
         <activity android:name=".AdminsUserView" />
         <activity android:name=".SentRequests" />
