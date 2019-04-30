@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
+import com.example.acer.rentapp.SeeRequestActivity;
 import com.example.acer.rentapp.UserDetailsActivity;
 
 
@@ -22,7 +23,8 @@ public class HomeFragment extends Fragment {
     public ImageButton carImgButton;
     public ImageButton logout;
     public ImageButton editDetailsButton;
-
+    public ImageButton recRequestBut;
+    public ImageButton sentRequestBut;
 
     public HomeFragment() {
 
@@ -38,14 +40,18 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_admin_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
         AppBarLayout appbar = (AppBarLayout) v.findViewById(R.id.appbar);
         float heightDp = getResources().getDisplayMetrics().heightPixels / 3;
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appbar.getLayoutParams();
         lp.height = (int) heightDp;
+
         carImgButton = v.findViewById(R.id.carButton);
         logout = v.findViewById(R.id.logout);
         editDetailsButton = v.findViewById(R.id.editDetails);
+        recRequestBut = v.findViewById(R.id.received);
+        sentRequestBut = v.findViewById(R.id.sent);
+
         carImgButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -76,6 +82,25 @@ public class HomeFragment extends Fragment {
                 startUserDetailsActivity();
             }
         });
+
+        recRequestBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SeeRequestActivity.class);
+                intent.putExtra("type","received");
+                startActivity(intent);
+            }
+        });
+
+        sentRequestBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SeeRequestActivity.class);
+                intent.putExtra("type","sent");
+                startActivity(intent);
+            }
+        });
+
         return v;
     }
 

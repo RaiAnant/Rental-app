@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.acer.rentapp.AssetPickup;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RequestDetails;
+import com.example.acer.rentapp.SentReqDetails;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.Request;
 
@@ -21,10 +22,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     private List<Request> assets;
     private Context context;
+    private String type;
 
-    public RequestAdapter(List<Request> assets, Context context){
+    public RequestAdapter(List<Request> assets, Context context, String type){
         this.assets = assets;
         this.context = context;
+        this.type = type;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.name.setText(asset.getAssetId());
         holder.cost.setText(asset.getRent());
         holder.location.setText(asset.getCustomerId());
-        if(asset.getStatus().compareTo("pending")==0){
+        if(asset.getStatus().compareTo("PENDING")==0){
             holder.img.setImageResource(R.drawable.cross);
         }else{
             holder.img.setImageResource(R.drawable.tick);
@@ -49,7 +52,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,RequestDetails.class);
+                Intent intent;
+                if(type.compareTo("received")==0){
+                    intent = new Intent(context,RequestDetails.class);
+                }else{
+                    intent = new Intent(context,SentReqDetails.class);
+                }
 
                 intent.putExtra("Asset",asset);
                 context.startActivity(intent);

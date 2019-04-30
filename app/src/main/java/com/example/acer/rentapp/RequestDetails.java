@@ -65,6 +65,8 @@ public class RequestDetails extends AppCompatActivity {
         assetCost = findViewById(R.id.assetCost);
         assetDrop = findViewById(R.id.assetDrop);
         assetPickup = findViewById(R.id.assetPick);
+        buttonUser = findViewById(R.id.userButton);
+        rentButton = findViewById(R.id.rentButton);
 
         buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +79,14 @@ public class RequestDetails extends AppCompatActivity {
             }
         });
 
-        getAssetList();
+        rentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lendToCustomer();
+            }
+        });
+
+        getAsset();
     }
 
     public void lenderInfo() {
@@ -123,15 +132,16 @@ public class RequestDetails extends AppCompatActivity {
 
     }
 
+
     public void lendToCustomer() {
         Log.d("Lend", "Customer");
         GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
 
         Map<String, String> query = new HashMap<>();
-        query.put("ASSET_ID", asset.getAssetId());
-        query.put("CUSTOMER_ID", "");
-        query.put("PICKUP_LOCATION", "" );
-        query.put("RENT_LOCATION", "");
+        query.put("ASSET_ID", request.getAssetId());
+        query.put("CUSTOMER_ID", request.getCustomerId());
+        query.put("PICKUP_TIME", request.getPickupTime());
+        query.put("DROP_TIME", request.getDropTime());
 
 
 
@@ -154,7 +164,7 @@ public class RequestDetails extends AppCompatActivity {
     }
 
 
-    public void getAssetList() {
+    public void getAsset() {
         Log.d(TAG, "Login");
 
 
