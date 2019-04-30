@@ -36,7 +36,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final User user = users.get(position);
-        holder.name.setText(user.getName();
+        holder.name.setText(user.getName());
         holder.cost.setText(user.getUserName());
         holder.location.setText(user.getLocation());
         holder.img.setImageResource(R.drawable.profile);

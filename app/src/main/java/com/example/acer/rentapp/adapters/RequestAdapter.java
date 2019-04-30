@@ -44,7 +44,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.name.setText(asset.getAssetId());
         holder.cost.setText(asset.getRent());
         holder.location.setText(asset.getCustomerId());
-        if(asset.getStatus().compareTo("pending")==0){
+        if(asset.getStatus().compareTo("PENDING")==0){
             holder.img.setImageResource(R.drawable.cross);
         }else{
             holder.img.setImageResource(R.drawable.tick);

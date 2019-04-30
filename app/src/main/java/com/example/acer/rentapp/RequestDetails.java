@@ -65,6 +65,8 @@ public class RequestDetails extends AppCompatActivity {
         assetCost = findViewById(R.id.assetCost);
         assetDrop = findViewById(R.id.assetDrop);
         assetPickup = findViewById(R.id.assetPick);
+        buttonUser = findViewById(R.id.userButton);
+        rentButton = findViewById(R.id.rentButton);
 
         buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override

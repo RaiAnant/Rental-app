@@ -2,6 +2,8 @@ package com.example.acer.rentapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ public class SeeRequestActivity extends AppCompatActivity {
     private RequestAdapter adapter;
     private RecyclerView recyclerView;
     private String requestType;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class SeeRequestActivity extends AppCompatActivity {
         context = SeeRequestActivity.this;
         Intent intent = getIntent();
         requestType = intent.getStringExtra("type");
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     public void getRecievedRequests() {
@@ -51,8 +55,8 @@ public class SeeRequestActivity extends AppCompatActivity {
         GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
 
         Map<String, String> query = new HashMap<>();
-        query.put("USER_ID", "");
-        query.put("USER", "LENDER");
+        query.put("USER_ID", pref.getString(getString(R.string.usr_id),""));
+        query.put("USER", "");
 
 
 
@@ -67,9 +71,10 @@ public class SeeRequestActivity extends AppCompatActivity {
 
                     assetData = (ArrayList<Request>) data;
 
-//                    Log.d("list12",String.valueOf(assetData.size()));
+                    Log.d("list12",String.valueOf(assetData.size()));
                     adapter = new RequestAdapter(assetData,context,requestType);
                     recyclerView.setAdapter(adapter);
+
                     if(data.size()==0){
                         Toast.makeText(SeeRequestActivity.this, "NO REQUESTS", Toast.LENGTH_LONG).show();
                     }
@@ -94,7 +99,7 @@ public class SeeRequestActivity extends AppCompatActivity {
         GetRequestDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetRequestDataService.class);
 
         Map<String, String> query = new HashMap<>();
-        query.put("USER_ID", "");
+        query.put("USER_ID", pref.getString(getString(R.string.usr_id),""));
         query.put("USER", "CUSTOMER");
 
 
@@ -132,8 +137,10 @@ public class SeeRequestActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(requestType.compareTo("received")==0) {
+            Log.d("list123", "received "+requestType);
             getRecievedRequests();
         }else{
+            Log.d("list123", "sent "+requestType);
             getSentRequests();
         }
     }
