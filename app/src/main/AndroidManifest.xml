@@ -21,7 +21,7 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RentalListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -29,7 +29,11 @@
             android:name=".AssetPickup"
             android:label="@string/title_activity_asset_pickup"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UserDetailsActivity"></activity>
+        <activity android:name=".UserDetailsActivity" />
+        <activity android:name=".AdminHome" />
+        <activity android:name=".AdminsUserView" />
+        <activity android:name=".SentRequests" />
+        <activity android:name=".RecievedRequests"></activity>
     </application>
 
 </manifest>
