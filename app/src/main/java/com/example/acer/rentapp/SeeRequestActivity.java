@@ -38,6 +38,7 @@ public class SeeRequestActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(SeeRequestActivity.this));
         context = SeeRequestActivity.this;
+        
     }
 
     public void getRecievedRequests() {
@@ -81,5 +82,11 @@ public class SeeRequestActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getRecievedRequests();
     }
 }

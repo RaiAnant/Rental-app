@@ -89,11 +89,9 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
         setContentView(R.layout.activity_asset_pickup);
         Intent intent = getIntent();
         caller = intent.getStringExtra("caller");
-        if(caller.compareTo("ASSET_LIST")==0){
-            asset = (Asset) intent.getSerializableExtra("Asset");
-        }else if(caller.compareTo("REQUEST_LIST")==0){
-            asset = (Asset) intent.getSerializableExtra("Asset");
-        }
+
+        asset = (Asset) intent.getSerializableExtra("Asset");
+
 
         assetImg = findViewById(R.id.imageView2);
         assetName = findViewById(R.id.assetNmae);
@@ -113,6 +111,11 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
         assetPickup.setText(asset.getPickupLocation());
         assetDrop.setText(asset.getDropLocation());
         assetCost.setText(asset.getCharges());
+        if(asset.getAssetType().compareTo("car")==0){
+            assetImg.setImageResource(R.drawable.car);
+        }else{
+            assetImg.setImageResource(R.drawable.bike);
+        }
 
         pref = PreferenceManager.getDefaultSharedPreferences(AssetPickup.this);
 
