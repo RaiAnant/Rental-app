@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.acer.rentapp.interfaces.GetAssetDataService;
 import com.example.acer.rentapp.interfaces.GetRequestDataService;
 import com.example.acer.rentapp.interfaces.GetUserDataService;
 import com.example.acer.rentapp.model.Asset;
@@ -142,7 +143,7 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             rentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                  blockAsset();
                 }
             });
         }
@@ -154,6 +155,48 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
                     isTimeChildAdded = true;
                     rentButton.setEnabled(false);
                 }
+            }
+        });
+
+    }
+
+    public void blockAsset() {
+        Log.d("block", "asset");
+        GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
+
+        Map<String, String> query = new HashMap<>();
+        query.put("ASSET_ID", asset.getAssetId());
+        query.put("ASSET_NAME", asset.getAssetName());
+        query.put("ASSET_TYPE", asset.getAssetType());
+        query.put("PICKUP_LOCATION", asset.getPickupLocation());
+        query.put("DROP_LOCATION", asset.getDropLocation());
+        query.put("CHARGES",asset.getCharges());
+        query.put("IS_AVAIL","NO");
+
+
+
+        Call<Asset> call = service.putAssetCheck(query);
+        call.enqueue(new Callback<Asset>() {
+            @Override
+            public void onResponse(Call<Asset> call , Response<Asset> response) {
+                Log.d("where", "inside response");
+
+                if (response.isSuccessful()) {
+                    Asset data = response.body();
+
+                    if (data==null) {
+                        Toast.makeText(AssetPickup.this, "BLOCK FAILED", Toast.LENGTH_LONG).show();
+
+                    } else
+                    {
+                        Toast.makeText(AssetPickup.this, "BLOCKED", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<Asset> call, Throwable t) {
+                Log.d("FAILED", t.getMessage());
+                Toast.makeText(AssetPickup.this, "FAILED", Toast.LENGTH_LONG).show();
             }
         });
 
