@@ -21,6 +21,7 @@ import com.example.acer.rentapp.GetAssetDataService;
 import com.example.acer.rentapp.LoginActivity;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
+import com.example.acer.rentapp.UserDetailsActivity;
 import com.example.acer.rentapp.model.Asset;
 import com.example.acer.rentapp.model.User;
 import com.example.acer.rentapp.network.RetrofitClientInstance;
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
 
     public ImageButton carImgButton;
     public ImageButton logout;
+    public ImageButton editDetailsButton;
 
 
     public HomeFragment() {
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment {
         lp.height = (int) heightDp;
         carImgButton = v.findViewById(R.id.carButton);
         logout = v.findViewById(R.id.logout);
+        editDetailsButton = v.findViewById(R.id.editDetails);
         carImgButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -86,7 +89,19 @@ public class HomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        editDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startUserDetailsActivity();
+            }
+        });
         return v;
+    }
+
+    public void startUserDetailsActivity(){
+        Intent intent = new Intent(getActivity(),UserDetailsActivity.class);
+        startActivity(intent);
     }
 
 

@@ -13,14 +13,8 @@ public class Asset implements Serializable {
     private String assetName;
     @SerializedName("LENDER_ID")
     private String userName;
-    @SerializedName("CUSTOMER_ID")
-    private String customerId;
-    @SerializedName("PICKUP_TIME")
-    private String pickupTime;
     @SerializedName("PICKUP_LOCATION")
     private String pickupLocation;
-    @SerializedName("DROP_TIME")
-    private String dropTime;
     @SerializedName("DROP_LOCATION")
     private String dropLocation;
     @SerializedName("CHARGES")
@@ -33,10 +27,7 @@ public class Asset implements Serializable {
         this.assetType = assetType;
         this.assetName = assetName;
         this.userName = userName;
-        this.customerId = customerId;
-        this.pickupTime = pickupTime;
         this.pickupLocation = pickupLocation;
-        this.dropTime = dropTime;
         this.dropLocation = dropLocation;
         this.charges = charges;
         this.isAvail = isAvail;
@@ -74,36 +65,12 @@ public class Asset implements Serializable {
         this.userName = userName;
     }
 
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getPickupTime() {
-        return pickupTime;
-    }
-
-    public void setPickupTime(String pickupTime) {
-        this.pickupTime = pickupTime;
-    }
-
     public String getPickupLocation() {
         return pickupLocation;
     }
 
     public void setPickupLocation(String pickupLocation) {
         this.pickupLocation = pickupLocation;
-    }
-
-    public String getDropTime() {
-        return dropTime;
-    }
-
-    public void setDropTime(String dropTime) {
-        this.dropTime = dropTime;
     }
 
     public String getDropLocation() {

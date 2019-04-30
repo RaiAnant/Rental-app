@@ -73,10 +73,6 @@ public class RentalListFragment extends Fragment {
     public void getAssetList() {
         Log.d(TAG, "Login");
 
-//        if (!validate()) {
-//            onLoginFailed();
-//            return;
-//        }
 
         GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
 

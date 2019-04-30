@@ -1,10 +1,13 @@
 package com.example.acer.rentapp;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +40,7 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class AssetPickup extends AppCompatActivity {
+public class AssetPickup extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
 
     public Asset assetData;
     public Asset asset;
@@ -54,7 +58,27 @@ public class AssetPickup extends AppCompatActivity {
     public boolean isLenderChildAdded;
     public boolean isTimeChildAdded;
 
+    private TextView pckUpDate ;
+    private TextView pckUpTime ;
+    private TextView dropDate ;
+    private TextView dropTime;
+    private Button startDateBut;
+    private Button startTimeBut;
+    private Button endDateBut;
+    private Button endTimeBut;
+    private Button submitBut;
+
+    public int hrSelected;
+    public int minSelected;
+    public int year;
+    public int month;
+    public int day;
+
+    public int flagfordate;
+    public int flagfortime;
+
     public User  lender;
+    public SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +99,15 @@ public class AssetPickup extends AppCompatActivity {
         isLenderChildAdded = false;
         isTimeChildAdded = false;
 
-//        assetName.setText(asset.getAssetName());
-//        assetId.setText(asset.getAssetId());
-//        assetPickup.setText(asset.getPickupLocation());
-//        assetDrop.setText(asset.getDropLocation());
-//        assetCost.setText(asset.getCharges());
+        assetName.setText(asset.getAssetName());
+        assetId.setText(asset.getAssetId());
+        assetPickup.setText(asset.getPickupLocation());
+        assetDrop.setText(asset.getDropLocation());
+        assetCost.setText(asset.getCharges());
+
+        pref = PreferenceManager.getDefaultSharedPreferences(AssetPickup.this);
+
+
         buttonUser = findViewById(R.id.userButton);
         rentButton = findViewById(R.id.rentButton);
 
@@ -87,9 +115,7 @@ public class AssetPickup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!isLenderChildAdded) {
-                    LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
-                    View v = LayoutInflater.from(view.getContext()).inflate(R.layout.user_card, null);
-                    linearLayout.addView(v);
+                    lenderInfo();
                     isLenderChildAdded = true;
                     buttonUser.setEnabled(false);
                 }
@@ -99,9 +125,7 @@ public class AssetPickup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!isTimeChildAdded) {
-                    LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
-                    View v = LayoutInflater.from(view.getContext()).inflate(R.layout.date_time_selector, null);
-                    linearLayout.addView(v);
+                    inflateTimePickerCard();
                     isTimeChildAdded = true;
                     rentButton.setEnabled(false);
                 }
@@ -120,11 +144,10 @@ public class AssetPickup extends AppCompatActivity {
         Timestamp myTimeStamp= timestamp;
 
         Map<String, String> query = new HashMap<>();
-        query.put("CUSTOMER_ID", "MACH");
-        query.put("ASSET_ID", "asset004");
-        query.put("PICKUP_TIME", timestamp.toString());
-        query.put("DROP_TIME", timestamp.toString());
-        query.put("ASSET_PICKUP", "YES");
+        query.put("CUSTOMER_ID", pref.getString(getString(R.string.usr_id),""));
+        query.put("ASSET_ID", asset.getAssetId());
+        query.put("PICKUP_TIME", pckUpDate.getText().toString()+" "+pckUpTime.getText().toString());
+        query.put("DROP_TIME", dropDate.getText().toString()+" "+dropTime.getText().toString());
         Log.d("where", "outside response");
 
 
@@ -139,14 +162,7 @@ public class AssetPickup extends AppCompatActivity {
                     assetData = data;
                     Log.d("Response123", assetData.toString());
 
-//
-//                    for (User user : response.body()) {
-//                        Log.wtf("Response", "" + user.getUserName());
-//                        Toast.makeText(LoginActivity.this, user.getUserName(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                    Log.d("data--",data.toString());
-//                    Log.d("SUCCESS", response.raw().toString());
+
 
                 } else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
@@ -163,8 +179,17 @@ public class AssetPickup extends AppCompatActivity {
 
     }
 
-    public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
+    @Override
+    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+
+        if(flagfortime==1){
+            pckUpTime.setText(getFormattedTimeString(i,i1));
+        }else{
+            dropTime.setText(getFormattedTimeString(i,i1));
+        }
+    }
+
+    public static class TimePickerFragment extends DialogFragment{
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -173,29 +198,55 @@ public class AssetPickup extends AppCompatActivity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
 
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    }
 
+    public static class DatePickerFragment extends DialogFragment
+             {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
+        }
+
+
+    }
+
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+
+        if(flagfordate==1){
+            pckUpDate.setText(getFormattedDateString(day,month,year));
+        }else{
+            dropDate.setText(getFormattedDateString(day,month,year));
         }
     }
+
+
     public void lenderInfo() {
         Log.d(TAG, "Login");
 
-        final ProgressDialog progressDialog = new ProgressDialog(AssetPickup.this,
-                R.style.Theme_AppCompat_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+//        final ProgressDialog progressDialog = new ProgressDialog(AssetPickup.this,
+//                R.style.Theme_AppCompat_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Authenticating...");
+//        progressDialog.show();
 
 
 
         GetUserDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetUserDataService.class);
 
         Map<String, String> query = new HashMap<>();
-        query.put("USER_ID", "put lender_id here");
+        query.put("USER_ID", asset.getUserName());
         Log.d("where", "outside response");
 
 
@@ -207,8 +258,8 @@ public class AssetPickup extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     List<User> data= response.body();
-
-
+                    lender = data.get(0);
+                    inflateUserCard();
 
                 }else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
@@ -221,6 +272,114 @@ public class AssetPickup extends AppCompatActivity {
                 Toast.makeText(AssetPickup.this, "FAILED", Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    public void inflateUserCard(){
+        LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
+        View v = LayoutInflater.from(AssetPickup.this).inflate(R.layout.user_card, null);
+        linearLayout.addView(v);
+        TextView name = v.findViewById(R.id.lenderName);
+        TextView id = v.findViewById(R.id.lenderId);
+        TextView contact = v.findViewById(R.id.lenderContact);
+        TextView loc = v.findViewById(R.id.lenderLoc);
+        name.setText(lender.getName());
+        id.setText(lender.getUserName());
+        contact.setText(lender.getPhno());
+        loc.setText(lender.getLocation());
+    }
+
+    public void inflateTimePickerCard(){
+        LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
+        View v = LayoutInflater.from(AssetPickup.this).inflate(R.layout.date_time_selector, null);
+
+
+        pckUpDate = v.findViewById(R.id.startDate);
+        pckUpTime = v.findViewById(R.id.startTime);
+        dropDate = v.findViewById(R.id.endDate);
+        dropTime = v.findViewById(R.id.endTime);
+        startDateBut = v.findViewById(R.id.startDateButton);
+        endDateBut = v.findViewById(R.id.endDateButton);
+        startTimeBut = v.findViewById(R.id.startTimeButton);
+        endTimeBut = v.findViewById(R.id.endTimeButton);
+        submitBut = v.findViewById(R.id.requestButton);
+
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        pckUpDate.setText(getFormattedDateString(day,month,year));
+        dropDate.setText(getFormattedDateString(day,month,year));
+        pckUpTime.setText(getFormattedTimeString(hour,minute));
+        dropTime.setText(getFormattedTimeString(hour,minute));
+        
+        startDateBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+                flagfordate = 1;
+
+            }
+        });
+        endDateBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+                flagfordate = 2;
+
+            }
+        });
+        startTimeBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+                flagfortime = 1;
+
+            }
+        });
+        endTimeBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "datePicker");
+                flagfortime = 2;
+            }
+        });
+
+
+
+        linearLayout.addView(v);
+    }
+
+    public String getFormattedTimeString(int i,int i1){
+        String format = "%d:%d";
+        if(i/10==0&&i1/10==0){
+            format = "0%d:0%d";
+        }else if(i/10==0){
+            format = "%0d:%d";
+        }else if(i1/10==0){
+            format = "%d:0%d";
+        }
+        return String.format("%d:%d",hrSelected,minSelected);
+    }
+
+    public String getFormattedDateString(int day,int month,int year){
+        String format = "%d|%d|%d";
+        if(month/10==0&&day/10==0){
+            format = "0%d|0%d|%d";
+        }else if(month/10==0){
+            format = "%d|0%d|%d";
+        }else if(day/10==0){
+            format = "0%d|%d|%d";
+        }
+
+        return String.format(format,day,month,year);
 
     }
 
