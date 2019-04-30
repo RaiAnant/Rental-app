@@ -9,9 +9,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -48,7 +50,9 @@ public class AssetPickup extends AppCompatActivity {
     public TextView lenderId;
     public TextView lenderPhno;
     public TextView lenderLoc;
-    public Button button;
+    public Button buttonUser,rentButton;
+    public boolean isLenderChildAdded;
+    public boolean isTimeChildAdded;
 
     public User  lender;
 
@@ -68,18 +72,39 @@ public class AssetPickup extends AppCompatActivity {
         lenderId  = findViewById(R.id.lenderId);
         lenderLoc = findViewById(R.id.lenderLoc);
         lenderPhno = findViewById(R.id.lenderContact);
+        isLenderChildAdded = false;
+        isTimeChildAdded = false;
 
-        assetName.setText(asset.getAssetName());
-        assetId.setText(asset.getAssetId());
-        assetPickup.setText(asset.getPickupLocation());
-        assetDrop.setText(asset.getDropLocation());
-        assetCost.setText(asset.getCharges());
-        button = findViewById(R.id.button);
+//        assetName.setText(asset.getAssetName());
+//        assetId.setText(asset.getAssetId());
+//        assetPickup.setText(asset.getPickupLocation());
+//        assetDrop.setText(asset.getDropLocation());
+//        assetCost.setText(asset.getCharges());
+        buttonUser = findViewById(R.id.userButton);
+        rentButton = findViewById(R.id.rentButton);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!isLenderChildAdded) {
+                    LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
+                    View v = LayoutInflater.from(view.getContext()).inflate(R.layout.user_card, null);
+                    linearLayout.addView(v);
+                    isLenderChildAdded = true;
+                    buttonUser.setEnabled(false);
+                }
+            }
+        });
+        rentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isTimeChildAdded) {
+                    LinearLayout linearLayout = findViewById(R.id.asset_detail_linear);
+                    View v = LayoutInflater.from(view.getContext()).inflate(R.layout.date_time_selector, null);
+                    linearLayout.addView(v);
+                    isTimeChildAdded = true;
+                    rentButton.setEnabled(false);
+                }
             }
         });
 
