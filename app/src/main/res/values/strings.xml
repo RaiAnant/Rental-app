@@ -16,4 +16,5 @@
     <string name="usr_cont">usrcont</string>
     <string name="password">password</string>
     <string name="title_activity_asset_pickup">AssetPickup</string>
+    <string name="title_activity_edit_admin_details">EditAdminDetails</string>
 </resources>
