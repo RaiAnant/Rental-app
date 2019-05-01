@@ -86,11 +86,12 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_weight="1"
-                android:background="@color/colorBg"
+                android:background="@drawable/layout_background"
                 android:scaleType="centerCrop"
                 android:src="@drawable/car" />
 
             <ImageButton
+                android:id="@+id/bike"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="8dp"
@@ -98,7 +99,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_weight="1"
-                android:background="@color/colorBg"
+                android:background="@drawable/layout_background"
                 android:scaleType="fitCenter"
                 android:src="@drawable/bike" />
 
@@ -110,7 +111,9 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/logout"
+                android:background="@drawable/layout_background"
+                android:src="@drawable/sent"
+                android:id="@+id/sent"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginRight="4dp"
@@ -120,7 +123,9 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/editDetails"
+                android:src="@drawable/received"
+                android:background="@drawable/layout_background"
+                android:id="@+id/received"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginLeft="4dp"
@@ -136,17 +141,22 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/sent"
+                android:src="@drawable/edit"
+                android:background="@drawable/layout_background"
+                android:id="@+id/editDetails"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
+                android:scaleType="fitCenter"
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/received"
+                android:id="@+id/logout"
+                android:src="@drawable/logout"
+                android:background="@drawable/layout_background"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:layout_marginLeft="4dp"

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +52,12 @@ public class RentalListFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v =  inflater.inflate(R.layout.fragment_rental_list, container, false);
+
+        AppBarLayout appbar = (AppBarLayout) v.findViewById(R.id.appbar);
+        float heightDp = getResources().getDisplayMetrics().heightPixels *2/ 5;
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appbar.getLayoutParams();
+        lp.height = (int) heightDp;
+
 
 
         Intent intent = getActivity().getIntent();
