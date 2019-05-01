@@ -109,9 +109,9 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
 
         assetName.setText(asset.getAssetName());
         assetId.setText(asset.getAssetId());
-        assetPickup.setText(asset.getPickupLocation());
-        assetDrop.setText(asset.getDropLocation());
-        assetCost.setText(asset.getCharges());
+        assetPickup.setText("Pickup at: "+asset.getPickupLocation());
+        assetDrop.setText("Drop at: "+asset.getDropLocation());
+        assetCost.setText(asset.getCharges()+"Rs/hr");
         if(asset.getAssetType().compareTo("car")==0){
             assetImg.setImageResource(R.drawable.car);
         }else{
@@ -368,8 +368,8 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
         TextView loc = v.findViewById(R.id.lenderLoc);
         name.setText(lender.getName());
         id.setText(lender.getUserName());
-        contact.setText(lender.getPhno());
-        loc.setText(lender.getLocation());
+        contact.setText("Phno: "+lender.getPhno());
+        loc.setText("From: "+lender.getLocation());
     }
 
     public void inflateTimePickerCard(){

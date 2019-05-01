@@ -31,7 +31,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UserDetailsActivity" />
         android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AdminHome" />
+        <activity android:name=".AdminHome"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AdminsUserView" />
         <activity android:name=".SentRequests" />
         <activity android:name=".RecievedRequests" />

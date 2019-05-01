@@ -193,9 +193,11 @@ public class RequestDetails extends AppCompatActivity {
                     }else{
                         assetImg.setImageResource(R.drawable.bike);
                     }
-                    assetPickup.setText(request.getPickupTime());
-                    assetDrop.setText(request.getDropTime());
-                    assetCost.setText(request.getRent());
+                    String[] pTime = request.getPickupTime().split(" ");
+                    String[] dTime = request.getDropTime().split(" ");
+                    assetPickup.setText("From: "+pTime[0]+"   At:"+pTime[1]);
+                    assetDrop.setText("To: "+dTime[0]+"   At:"+dTime[1]);
+                    assetCost.setText(request.getRent()+"Rs");
 
                 } else {
                     Log.d("SUCCESS BUT NO DATA", "NO DATA");
@@ -222,7 +224,7 @@ public class RequestDetails extends AppCompatActivity {
         TextView loc = v.findViewById(R.id.lenderLoc);
         name.setText(lender.getName());
         id.setText(lender.getUserName());
-        contact.setText(lender.getPhno());
-        loc.setText(lender.getLocation());
+        contact.setText("Phno: "+lender.getPhno());
+        loc.setText("From: "+lender.getLocation());
     }
 }

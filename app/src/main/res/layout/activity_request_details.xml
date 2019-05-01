@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:background="@color/colorBg2"
         android:id="@+id/asset_detail_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,8 +41,10 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="32dp"
+                android:fontFamily="monospace"
                 android:text="TextView"
-                android:textSize="28sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textSize="36sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,6 +56,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/assetNmae" />
 
@@ -63,8 +67,9 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="32dp"
+                android:fontFamily="serif"
                 android:text="TextView"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -75,8 +80,9 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="serif"
                 android:text="TextView"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/assetPick" />
 
@@ -87,32 +93,37 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="serif"
                 android:text="TextView"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/assetDrop" />
 
             <Button
+
+                android:background="@color/colorBg"
                 android:id="@+id/rentButton"
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="38dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="rent"
+                android:text="GRANT"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
+                android:background="@color/colorBg"
                 android:id="@+id/userButton"
-                android:layout_width="61dp"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="lender"
-                android:textSize="8sp"
+                android:text="Customer"
+
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/rentButton" />
 

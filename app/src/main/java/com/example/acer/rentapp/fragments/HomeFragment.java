@@ -22,6 +22,7 @@ import com.example.acer.rentapp.UserDetailsActivity;
 public class HomeFragment extends Fragment {
 
     public ImageButton carImgButton;
+    public ImageButton bikeImgButton;
     public ImageButton logout;
     public ImageButton editDetailsButton;
     public ImageButton recRequestBut;
@@ -49,11 +50,21 @@ public class HomeFragment extends Fragment {
         lp.height = (int) heightDp;
 
         carImgButton = v.findViewById(R.id.carButton);
+        bikeImgButton = v.findViewById(R.id.bike);
         logout = v.findViewById(R.id.logout);
         editDetailsButton = v.findViewById(R.id.editDetails);
         recRequestBut = v.findViewById(R.id.received);
         sentRequestBut = v.findViewById(R.id.sent);
         myAssetBut = v.findViewById(R.id.myasset);
+
+        bikeImgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RentalListActivity.class);
+                intent.putExtra("type","bike");
+                startActivity(intent);
+            }
+        });
 
         myAssetBut.setOnClickListener(new View.OnClickListener() {
             @Override

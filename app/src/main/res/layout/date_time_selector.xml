@@ -44,14 +44,22 @@
                         android:id="@+id/startDate"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="4" />
+                        android:layout_weight="4"
+                        android:background="@drawable/list_item_bg"
+                        android:paddingTop="8dp"
+                        android:textSize="24sp"
+                        android:text="27|03|998"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/startDateButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="SET"
+                    android:textSize="20sp"
+                    android:background="@drawable/layout_background"
+                    android:layout_marginTop="14dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,14 +84,22 @@
                         android:id="@+id/startTime"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="4" />
+                        android:layout_weight="4"
+                        android:background="@drawable/list_item_bg"
+                        android:paddingTop="8dp"
+                        android:textSize="24sp"
+                        android:text="24:30"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/startTimeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="SET"
+                    android:textSize="20sp"
+                    android:background="@drawable/layout_background"
+                    android:layout_marginTop="14dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -108,14 +124,22 @@
                         android:id="@+id/endDate"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="4" />
+                        android:layout_weight="4"
+                        android:background="@drawable/list_item_bg"
+                        android:paddingTop="8dp"
+                        android:textSize="24sp"
+                        android:text="27|03|998"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/endDateButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="SET"
+                    android:textSize="20sp"
+                    android:background="@drawable/layout_background"
+                    android:layout_marginTop="14dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,14 +164,22 @@
                         android:id="@+id/endTime"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="4" />
+                        android:layout_weight="4"
+                        android:background="@drawable/list_item_bg"
+                        android:paddingTop="8dp"
+                        android:textSize="24sp"
+                        android:text="08:45"/>
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/endTimeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="SET"
+                    android:textSize="20sp"
+                    android:background="@drawable/layout_background"
+                    android:layout_marginTop="14dp"/>
             </LinearLayout>
 
             <Button
@@ -156,7 +188,12 @@
                 android:layout_height="0dp"
                 android:layout_marginLeft="64dp"
                 android:layout_marginRight="64dp"
-                android:layout_weight="2" />
+                android:layout_weight="2"
+                android:text="REQUEST"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                android:background="@drawable/layout_background"
+                />
 
 
         </LinearLayout>

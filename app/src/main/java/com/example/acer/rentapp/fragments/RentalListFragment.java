@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.acer.rentapp.interfaces.GetAssetDataService;
@@ -45,6 +46,7 @@ public class RentalListFragment extends Fragment {
     public String type;
     public Context context ;
     public SharedPreferences pref;
+    public ImageView backDrop;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +67,15 @@ public class RentalListFragment extends Fragment {
             type = savedInstanceState.getString("type");
         }else{
             type = intent.getStringExtra("type");
+        }
+        backDrop = v.findViewById(R.id.backdrop);
+        if(type.toLowerCase().compareTo("car")==0){
+            backDrop.setImageResource(R.drawable.car3);
+        }else if(type.toLowerCase().compareTo("any")==0) {
+            backDrop.setImageResource(R.drawable.backdrop);
+        }else
+        {
+            backDrop.setImageResource(R.drawable.bike3);
         }
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);

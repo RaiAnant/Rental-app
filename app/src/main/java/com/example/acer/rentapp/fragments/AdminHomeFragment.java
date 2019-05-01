@@ -43,7 +43,7 @@ public class AdminHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_admin_home,  container, false);
         AppBarLayout appbar = (AppBarLayout) v.findViewById(R.id.appbar);
-        float heightDp = getResources().getDisplayMetrics().heightPixels / 3;
+        float heightDp = getResources().getDisplayMetrics().heightPixels*2 / 5;
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appbar.getLayoutParams();
         lp.height = (int) heightDp;
         assetImgButton = v.findViewById(R.id.asset);

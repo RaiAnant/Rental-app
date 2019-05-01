@@ -39,8 +39,8 @@ public class RentAdapter extends RecyclerView.Adapter<RentAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Asset asset = assets.get(position);
         holder.name.setText(asset.getAssetName());
-        holder.cost.setText(asset.getCharges());
-        holder.location.setText(asset.getPickupLocation());
+        holder.cost.setText(asset.getCharges()+"Rs/hr");
+        holder.location.setText("Pickup from: "+asset.getPickupLocation());
         if(asset.getAssetType().toLowerCase().compareTo("car")==0){
             holder.img.setImageResource(R.drawable.car);
         }else{
