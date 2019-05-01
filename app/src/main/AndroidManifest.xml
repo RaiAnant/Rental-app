@@ -41,7 +41,9 @@
         <activity
             android:name=".EditAdminDetails"
             android:label="@string/title_activity_edit_admin_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MyAssetActivity" />
+        <activity android:name=".EditAssetActivity"></activity>
     </application>
 
 </manifest>
