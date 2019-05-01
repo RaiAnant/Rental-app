@@ -66,7 +66,7 @@ public class EditAdminDetails extends AppCompatActivity {
         Map<String, String> query = new HashMap<>();
         query.put("ADMIN_ID", sharedPref.getString(getString(R.string.usr_id),""));
         query.put("ADMIN_NAME", _nameText.getText().toString());
-        query.put("USER_PASSWORD", _passwordText.getText().toString());
+        query.put("ADMIN_PASSWORD", _passwordText.getText().toString());
 
 
 

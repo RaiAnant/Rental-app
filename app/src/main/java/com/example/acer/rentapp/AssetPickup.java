@@ -143,24 +143,32 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
             rentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  blockAsset();
+                    if(rentButton.getText().toString().compareTo("Block")==0){
+                        blockAsset("Block");
+                        rentButton.setText("UnBlock");
+                    }else{
+                        blockAsset("UnBlock");
+                        rentButton.setText("Block");
+                    }
+
+                }
+            });
+        }else {
+            rentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!isTimeChildAdded) {
+                        inflateTimePickerCard();
+                        isTimeChildAdded = true;
+                        rentButton.setEnabled(false);
+                    }
                 }
             });
         }
-        rentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isTimeChildAdded) {
-                    inflateTimePickerCard();
-                    isTimeChildAdded = true;
-                    rentButton.setEnabled(false);
-                }
-            }
-        });
 
     }
 
-    public void blockAsset() {
+    public void blockAsset(String block) {
         Log.d("block", "asset");
         GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
 
@@ -171,7 +179,11 @@ public class AssetPickup extends AppCompatActivity implements TimePickerDialog.O
         query.put("PICKUP_LOCATION", asset.getPickupLocation());
         query.put("DROP_LOCATION", asset.getDropLocation());
         query.put("CHARGES",asset.getCharges());
-        query.put("IS_AVAIL","NO");
+        if(block.compareTo("Block")==0){
+            query.put("IS_AVAIL","NO");
+        }else{
+            query.put("IS_AVAIL","YES");
+        }
 
 
 
