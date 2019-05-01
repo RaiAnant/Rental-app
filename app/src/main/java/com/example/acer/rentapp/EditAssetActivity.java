@@ -58,7 +58,7 @@ public class EditAssetActivity extends AppCompatActivity {
             deleteBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+                    deleteAssets();
                 }
             });
             changeBut.setOnClickListener(new View.OnClickListener() {
@@ -157,4 +157,34 @@ public class EditAssetActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void deleteAssets() {
+        Log.d("del", "asset");
+        GetAssetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetAssetDataService.class);
+
+        Map<String, String> query = new HashMap<>();
+        query.put("ASSET_ID", asset.getAssetId());
+
+
+        Call<Asset> call = service.delAssetCheck(query);
+        call.enqueue(new Callback<Asset>() {
+            @Override
+            public void onResponse(Call<Asset> call, Response<Asset> response) {
+                Log.d("where", "inside response");
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(EditAssetActivity.this, "DELETED", Toast.LENGTH_LONG).show();
+
+
+                }
+            }
+            @Override
+            public void onFailure(Call<Asset> call, Throwable t) {
+                Log.d("FAILED", t.getMessage());
+                Toast.makeText(EditAssetActivity.this, "DELETION FAILED", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

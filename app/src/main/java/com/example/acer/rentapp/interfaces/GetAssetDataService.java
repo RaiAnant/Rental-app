@@ -24,5 +24,5 @@ public interface GetAssetDataService {
     Call<Asset>  putAssetCheck (@QueryMap Map<String, String> options);
 
     @DELETE("asset")
-    Call<List<Asset>>  delAssetCheck (@QueryMap Map<String, String> options);
+    Call<Asset>  delAssetCheck (@QueryMap Map<String, String> options);
 }
