@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,EditAssetActivity.class);
-                intent.putExtra("caller","ASSET_LIST");
+                intent.putExtra("type","del_edit");
                 intent.putExtra("Asset",asset);
                 context.startActivity(intent);
             }

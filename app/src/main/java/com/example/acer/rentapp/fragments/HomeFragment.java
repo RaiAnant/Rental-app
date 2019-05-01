@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.acer.rentapp.MyAssetActivity;
 import com.example.acer.rentapp.R;
 import com.example.acer.rentapp.RentalListActivity;
 import com.example.acer.rentapp.SeeRequestActivity;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
     public ImageButton editDetailsButton;
     public ImageButton recRequestBut;
     public ImageButton sentRequestBut;
+    public ImageButton myAssetBut;
 
     public HomeFragment() {
 
@@ -51,6 +53,15 @@ public class HomeFragment extends Fragment {
         editDetailsButton = v.findViewById(R.id.editDetails);
         recRequestBut = v.findViewById(R.id.received);
         sentRequestBut = v.findViewById(R.id.sent);
+        myAssetBut = v.findViewById(R.id.myasset);
+
+        myAssetBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),MyAssetActivity.class);
+                startActivity(intent);
+            }
+        });
 
         carImgButton.setOnClickListener(new View.OnClickListener() {
 
