@@ -92,6 +92,7 @@ public class EditAssetActivity extends AppCompatActivity {
         query.put("PICKUP_LOCATION", pickLoc.getSelectedItem().toString());
         query.put("DROP_LOCATION", dropkLoc.getSelectedItem().toString());
         query.put("CHARGES", charges.getText().toString());
+        query.put("IS_AVAIL","YES");
 
         Call<Asset> call = service.putAssetCheck(query);
         call.enqueue(new Callback<Asset>() {
@@ -131,6 +132,7 @@ public class EditAssetActivity extends AppCompatActivity {
         query.put("PICKUP_LOCATION", pickLoc.getSelectedItem().toString());
         query.put("DROP_LOCATION", dropkLoc.getSelectedItem().toString());
         query.put("CHARGES", charges.getText().toString());
+        query.put("IS_AVAIL","YES");
 
         Call<Asset> call = service.postAssetCheck(query);
         call.enqueue(new Callback<Asset>() {
